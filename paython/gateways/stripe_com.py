@@ -1,6 +1,10 @@
 import time
 import logging
-from django.conf import settings
+
+try:
+    from django.conf import settings
+except ImportError:
+    raise Exception('Django enviorment not installed, please install django env to support multi currencies')
 
 try:
     import stripe
@@ -61,7 +65,7 @@ class Stripe(object):
         try:
             response = self.stripe_api.Charge.create(
                 amount=amount,
-                currency='usd' if getattr(settings, 'CURRENT_CURRENCY') is None else getattr(settings, 'CURRENT_CURRENCY'),
+                currency=getattr(settings, 'CURRENT_CURRENCY', 'usd'),
                 card={
                     "name":credit_card.full_name,
                     "number": credit_card.number,
