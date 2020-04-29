@@ -2,11 +2,6 @@ import time
 import logging
 
 try:
-    from django.conf import settings
-except ImportError:
-    raise Exception('Django enviorment not installed, please install django env to support multi currencies')
-
-try:
     import stripe
 except ImportError:
     raise Exception('Stripe library not found, please install requirements.txt')
@@ -55,7 +50,7 @@ class Stripe(object):
         """
         raise NotImplementedError('Stripe does not support auth or settlement. Try capture().')
 
-    def capture(self, amount, credit_card=None, billing_info=None, shipping_info=None):
+    def capture(self, amount, credit_card=None, billing_info=None, shipping_info=None, currency='usd'):
         debug_string = " paython.gateways.stripe.parse() -- Sending charge "
         logger.debug(debug_string.center(80, '='))
 
@@ -65,7 +60,7 @@ class Stripe(object):
         try:
             response = self.stripe_api.Charge.create(
                 amount=amount,
-                currency=getattr(settings, 'CURRENT_CURRENCY', 'usd'),
+                currency=currency,
                 card={
                     "name":credit_card.full_name,
                     "number": credit_card.number,
