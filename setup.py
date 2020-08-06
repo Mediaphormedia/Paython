@@ -43,6 +43,7 @@ setup(
         'suds==0.4',
         'stripe>=1.7.4',
         'samurai==0.6',
-        'python-dateutil'
+        'python-dateutil',
+        'requests'
     ]
 )

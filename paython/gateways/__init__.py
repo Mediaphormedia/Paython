@@ -5,3 +5,4 @@ from plugnpay import PlugnPay
 from stripe_com import Stripe
 from samurai_ff import Samurai
 from firstdata import FirstData
+from payway import Payway
